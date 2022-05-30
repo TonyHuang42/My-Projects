@@ -1,0 +1,38 @@
+1. Because we want to use memory more efficiently. If they were permitted, the adjacent free blocks will be wasted. For example, 
+    if there are two adjacent free blocks with both size of 8Kb, and we want to allocate a block with size of 12 Kb. If these two adjasent 
+    free blocks were merged together, the block we want to allocate can fit into it. Otherwise, it need to find another suitable free block,
+    and these two adjacent free blocks are wasted.
+
+2. myfree(), when we free a block, if the adjacent block(s) is/are free, we have to merge them into one block to prevent problems 
+    mentioned in the first question.
+
+3. First: fast and simple
+
+    Best: keeps the large blocks for future allocation
+
+    Worst: minimizes the numbers of small free blocks
+
+    Next: fast
+
+4. The significance of "Average largest free block" is the largest space for new allocation, if this number is not big enough, a big new allocation 
+    will fail. Best fit generally has the best performance, because it always selects the smallest suitable block first, and leaves the larger blocks.
+
+5. The significance of "Average number of small blocks" is small free blocks are not useful, because many new allocations cannot fit into it, 
+    causes external fragmentation. Worst fit generally has the best performance, because it always uses the largest free blocks first, leaves the 
+    small blocks.
+
+6. Yes, it is possible. I will use a pointer scan from the head to end, if one block is free, look at next block. If the next block is free, then merge
+    them into one free block, if the next block is allocated, then swap the free block and the allocated block. After running this, the allocated 
+    blocks will all be in the front, and the merged free block will be at the end.
+
+7.  I will change mymalloc(size) to mymalloc(size, &p), p is a pointer always point to the newly allocated block, even the block is moved after 
+     memory compaction.
+
+8. Use mymalloc() to allocate a new block in the new location, copy the memory in the old block to the new one, then free the old block by using
+    myfree().
+
+9. mymalloc() need to know the strategy to deside which allcation strategy to use.
+    myfree() need to know the strategy, if it is next strategy, myfree() need to change the next pointer.
+
+10. It is easyer for linked list to find the next or last node, we can just use -> next and -> last. For array, we need to skip the duplicated nodes with
+      same memory location.

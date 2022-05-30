@@ -1,0 +1,25 @@
+Part 1
+1- Pointers
+1. Because *temp is a pointer, argv[0] is the program¡¯s name, it is a string, we cannot copy a string to a pointer.
+2. A 9-characters-long name is a string with 10 characters, because the last character is ¡®\0¡¯, so the 10 characters exceed the size of temp, which is 9.
+3. Buffer is a pointer points to ¡°Hello¡±, we cannot copy a string ¡°World¡± to a pointer.
+4. Yes, this is correct. A simpler expression for &b[0] is char *buffer = b.
+5. Program1 5 abc
+6. Because buffer is a static array, s is a pointer, we cannot make a pointer pointes to a static array.
+2-Debuggin
+1. strcmp (a, b) returns 0 (false) if a == b, so !strcmp (a, b) returns 1 (true) if a == b, if (!strcmp (a, b)) means if (a == b)
+2. sizeof(s) returns the total bits of array s, sizeof(*s) returns the bits of s data type, so sizeof(s)/sizeof(*s) returns the length of array s. It will not work with a pointer to a dynamically allocated array, because s is a pointer points to the array, sizeof(s) depends on the computer architecture bit width (e.g. 32-bit, 64-bit).
+3. There is a ¡°break;¡± missing in case ¡®h¡¯, without the break, the program will continue to default.
+4. There is a argv++ missing before the while loop, without this, the program will consider the program name is the first word, which do not make since.
+5. Entries does not change, it always prints out the first entry. I add a temp to change entries.
+Part 2
+1. Because sometimes we need to change the shell¡¯s working director. No, it cannot.
+2. By using chdir(exec_argv[1]). Chdir() returns 0 if success, and returns -1 if error, when it is error, the if statement will print out the error message.
+3. Shell will exit automatically after one command.
+4. fork() returns a negative value if creation of a child process was unsuccessful, returns 0 when returned to the newly created child process, and returns a positive value which is the process ID of newly created child process when returned to parent or caller. If pid_from_fork < 0, the program prints out ¡°fork failed¡±. If pid_from_fork = 0, the program returns imthechild function, and uses exec_argv[0] as path_to_exec, &exec_argv[0] as args[]. If pid_from_fork > 0, the program returns imtheparent function, and uses the child¡¯s process ID as child_pid.
+5. A new child process is created before chdir(), chdir() will only change the directory of the child process, not the directory of the parent process.
+6. Yes, their output is printed out all together one by one.
+7. Yes, the child shell receives my input.
+8. b.sh ends running immediately. b.sh also end immediately when is running in the background.
+9. Yes, a shell can kill itself. Yes, a shell within a shell can kill the parent shell.
+10. Background processed keep running when exit from the shell. Yes, I can see them with the ¡®ps¡¯ command.

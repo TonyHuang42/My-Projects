@@ -1,0 +1,19 @@
+1.
+
+2. By using semaphores for synchronization.
+
+3.
+
+4.It cannot, 
+
+5.Because they are defined in another file.
+
+6. It prints out the error number
+
+7. It does not matter
+
+8.
+
+9.No
+
+10.

@@ -1,0 +1,47 @@
+Part 1:
+
+1. Threads works better than multiple processes because threads share the memory, and can edit the strings together.
+
+2. To make sure the string is in order, in cade of one thread is in the middle of swapping characters.
+
+3. fp is a void type pointer.
+
+--------------------------------------------------------------------------
+
+1. Because the program need to wait every threads to finish. The program will function if we detached the sleeper thread, because after the sleeper thread, the program already exit.
+
+2. sched_yield would move this thread to the end of the queue, and let other thread to run. 
+
+3. Because the thread is cancelled, it does not swap.
+
+4. It causes deadlock.
+
+5. It allowes the program to run for 5 seconds. After 5 seconds, if the program is still running, it will exit.
+
+6. By using PTHREAD_CANCEL_ASYNCHRONOUS, we can cancel the thread at anytime.
+
+7. We need the info everytime in the loop.
+
+----------------------------------------------------------------------------
+
+Part 2:
+
+Q1. For example, if the adder thread and degrouper thread are rewriting the buffer together, there might error on shifting the characters in the buffer.
+
+Q2. The program will generate incorrect output, because there will be error on shifting the characters in the buffer.
+
+Q3. The array of buffer needs protection, because all of the 5 threads can change the array, if multiple threads are shifting the array at the same time, there will be errors.
+
+Q4.  It will continue to consume processor time. with sched_yield(), it will be more efficient.
+
+Q5. if the mutex is already locked, trylock will not block the thread, and the thread can do other things, which is more efficient.
+
+Q6. No, because we can add num_ops at the same time for different threads.
+
+Q7. because when other threads are waiting for accessing the critical section, they are spending time and resouces. 
+
+Q8. yield allows other thread with higher priority to run immediately, and spin-waiting keeps waiting.
+
+Q9. when spin-waiting time is less than the time of a lower-priority thread waiting to run.
+
+Q10. value is 1, because we want only one thread to change the buffer. if specified a larger value, multiple threads could change the buffer at the same time, which would cause errors.
