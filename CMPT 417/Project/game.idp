@@ -1,0 +1,75 @@
+include <table_utils> 
+
+vocabulary V1 
+{ 
+    type G isa int 
+    type K isa int 
+    type V isa int 
+    num(G)
+    cap(K) 
+    refill(K) 
+    fun(G,V) 
+} 
+
+vocabulary V2
+{ 
+    extern vocabulary V1 
+    play(G):K 
+    pocket(G):K 
+    refill:K 
+    cap:K 
+    start:G 
+    last(G):G
+} 
+
+theory constraints : V2
+{ 
+    {refill = x <- refill(x).} 
+    {cap = x <- cap(x).} 
+
+    start=1. 
+    {last(G1)=G2 <- G1~=start & G1-1=G2.} 
+
+    !G: G~=start => 1 =< play(G)=< pocket(last(G)). 
+    1 =< play(start) =< cap. 
+
+    !G: G~=start => pocket(G)=min{x:x=pocket(last(G))+refill-play(G) | cap=x:x}. 
+    pocket(start)=min{x:x=cap+refill-play(start) | cap=x:x}. 
+} 
+
+term Obj : V2
+{ 
+    -sum{G i:fun(G,i):play(G)*i} 
+} 
+
+
+procedure getStructure()
+{ 
+    local nb = totable(S[V1::cap].ct)[1][1] 
+    S[V1::K.type]=range(0,nb) 
+    setvocabulary(S,V2) 
+    return S 
+} 
+
+procedure main()
+{ 
+    local a,b,min = minimize(constraints,getStructure(),Obj)
+    print(-min) 
+}
+
+factlist S: V1
+{ 
+    num(10).
+    cap(5).
+    refill(4).
+    fun(1,1).
+    fun(2,2).
+    fun(3,3).
+    fun(4,4).
+    fun(5,5).
+    fun(6,6).
+    fun(7,7).
+    fun(8,8).
+    fun(9,9).
+    fun(10,10).
+} 
